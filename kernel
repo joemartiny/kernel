@@ -2,7 +2,9 @@
 #Author: Joseph Martins
 #Project-name: Kernel
 #it makes creation of flask project easy and more fun
-#oh yeah what if i say the same for DB connection....huh?
+#it's suitable for both beginners and professionals (not ready to write the whole config file all over again)..
+#oh yeah what if i say the same for DB connection....huh? thou this is coming soon, watch out
+
 
 
 #let's import all needed modules.....huh?
