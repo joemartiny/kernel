@@ -2,97 +2,15 @@
 #Author: Joseph Martins
 #Project-name: Kernel
 #it makes creation of flask project easy and more fun
-#it's suitable for both beginners and professionals (not ready to write the whole config file all over again)..
-#oh yeah what if i say the same for DB connection....huh? thou this is coming soon, watch out
-
+#oh yeah what if i say the same for DB connection....huh?
 
 
 #let's import all needed modules.....huh?
 
-import os
-import re
+
 import sys
-import errno
 
-
-class Kernel:
-	"""Class Kernel would contain all important methods to handle the process"""
-
-	#this variable would hold the main code to input
-	appIntro="""
-
-#~Author: \n
-#~Description:\n
-#~AppName: {}\n
-\n	
-\n
-from flask import Flask\n
-
-#instantiate Flask
-app= Flask(__name__)
-
-@app.route("/")
-def hello():
-	return "<b> My {} app </b>"
-
-
-if __name__=='__main__':
-	app.run(debug=True)
-
-
-
-	"""
-
-	def __init__(self):
-		print "\nStarting Kernel...\n"
-		self.startKernel()
-
-	def startKernel(self):
-		print "Kernelling....\n"		
-
-	def createApp(self,appName):
-		try:
-			os.makedirs("/"+appName)
-			self.createAppStructure(appName)
-#			print "Kernel Completed...\n"
-
-		#	print "Your project was sucessfully created....\n\n Thumbs Up..\n"
-
-		except OSError as exception:
-
-			if exception.errno != errno.EEXIST:
-				print "Kernel Stopped working...\nand your task was left incomplete..\n"
-
-			elif exception.errno == errno.EEXIST:
-
-				print "MayDay...MayDay.. Kernel is reporting..\n"
-				print "This Folder already exist...\n"
-
-	def createAppStructure(self,appName):
-
-		try:
-			os.makedirs("/"+appName+"/templates")# create template folder
-			os.makedirs("/"+appName+"/static") # create static folder
-			os.makedirs("/"+appName+"/controller") #create controller folder
-			os.makedirs("/"+appName+"/model") #create model folder
-			os.makedirs("/"+appName+"/db") #create db folder- to handle db connections code..
-
-			#now lets create the files
-
-			main= open("/"+appName+'/app.py','w+')# create the main app
-
-			main.write(self.appIntro.format(appName,appName))# main writing process
-
-			main.close()
-
-			print "Kernel Completed...\n"
-
-			print "Your project was sucessfully created....\n\n Thumbs Up..\n"
-
-		except OSError as exception:
-
-			if exception.errno != errno.EEXIST:
-				print "Kernel Stopped working...\n Seems an error occured..\n"
+from kernelling.kernel_c import Kernel
 
 
 
@@ -109,22 +27,51 @@ krnl=Kernel()
 #the cmd data reciever goes here
 # lets check if all the user wants to do is know the kernel number or not
 
-if len(sys.argv)>1 and len(sys.argv)<3: 
-	"""if the user didnt input more than one parameter into the comand line then run this function, so if the user puts d about keyword then just return him details of the kernel , else perform what kernel is best for.."""
+def kernel():
 
-	if sys.argv[1]=='-about':
-		print "Kernel: Your No1 command line tool...\n"
-		print "Kernel version is 0.01 enjoy...\n"		
-		print "If you want to support codically!! go check our gitHub page...Thanks.."
+	if len(sys.argv)>1 and len(sys.argv)<3: 
+
+		"""if the user didnt input more than one parameter into the comand line then run this function, so if the user 	   puts d about keyword then just return him details of the kernel , else perform what kernel is best for..
+		"""
+
+		if sys.argv[1]=='-about':
+			print "Kernel: Your No1 command line tool...\n"
+			print "Kernel version is 0.01 enjoy...\n"		
+			print "If you want to support codically!! go check our gitHub page...Thanks.."
+		else:
+			#create basic flask application
+			krnl.createBasicApp(sys.argv[1])
+
+
+	elif len(sys.argv)>2 and len(sys.argv)<4: 
+
+		"""if the user didnt input more than three parameter into the command line then run this function, this function can be used to perform multiple processes like create professional app config and so on"""
+
+		if sys.argv[2]=='-pro':
+			"""
+				Production keyword is gonna be used to create a professional flask app config
+				with standard wsgi file
+			"""
+			#create basic flask application
+			krnl.createProductionApp(sys.argv[1])
+		else:
+			#create basic flask application
+			#krnl.createBasicApp(sys.argv[1])
+			print "opps error"
+
+
+
+
 	else:
-		krnl.createApp(sys.argv[1])
-else:
-	print "Error Report: No project name was inputed...please do that\n"
+		print "Error Report: No project name was inputed...please do that\n"
 
-	print "Here is a tip..\n"
+		print "Here is a tip..\n"
 
-	print "Type the project name soon after the 'Python kernel' command\n"
+		print "Type the project name soon after the 'Python kernel' command\n"
 
-	print "Much like 'python kernel <appName>\n"
+		print "Much like 'python kernel <appName>\n"
 
-	print "Hope that helped"
+		print "Hope that helped"
+
+#invoke kernel function
+kernel()
